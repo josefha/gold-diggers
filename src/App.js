@@ -33,13 +33,21 @@ class App extends Component {
     const startY = 2850;
     const startMoney = 1;
     const currentSales = ["Robin","Hugo","Shani","Victor","David"];
+    const SOLD = "SOLD";
+    const BUY_NOW = "BUY NOW";
     let Y = startY;
     let oldPrice = startMoney;
+
+    const onClick = function(e){
+      console.log("e.datapoint",e.dataPoint);
+    }
+
     for(var i=0; i<numberOfLayers; i++){
       const yForThis = Y*1;
       const label = i<currentSales.length ? currentSales[i] : "Open for sale"
       const price = oldPrice*2;
-      dataPoints.push({label, y: yForThis, price });
+      const tooltip = i<currentSales.length ? SOLD : BUY_NOW
+      dataPoints.push({label, y: yForThis, price, tooltip, click: onClick});
       oldPrice=price;
       Y = yForThis;
     }
@@ -67,7 +75,7 @@ class App extends Component {
 				type: "pyramid",
 				legendText: "{label}",
 				indexLabel: "{label} - {price}$",
-				toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+				toolTipContent: "<b>{tooltip}</b>",
 				dataPoints: reversedData
 			}]
 		}
