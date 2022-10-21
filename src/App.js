@@ -48,6 +48,8 @@ class App extends Component {
 			<CanvasJSChart options = {options}
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+
+      <a style={{fontSize: "52px", margin: "50px auto", color: "black"}} href="./RICH.pdf" download>Download the pdf baby</a>
 		</div>
 		);
 	}
