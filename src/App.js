@@ -38,7 +38,9 @@ const StyledLink = styled.a`
 `;
 
 const StyledForm = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 50px; 
 `;
 
@@ -61,8 +63,8 @@ const RootDiv = styled.div`
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const App = () => {
-  const [showConfetti, setShowConfetti] = useState(true)
   const [isPaid, setIsPaid] = useState(false)
+  const [showPayment, setShowPayment] = useState(false)
 
   const handlePayment = () => {
     setIsPaid(true);
@@ -82,6 +84,7 @@ const App = () => {
 
   const onClick = function (e) {
     console.log("e.datapoint", e.dataPoint);
+    setShowPayment(true)
   }
 
   for (var i = 0; i < numberOfLayers; i++) {
@@ -119,7 +122,8 @@ const App = () => {
       legendText: "{label}",
       indexLabel: "{label} - {price}$",
       toolTipContent: "<b>{tooltip}</b>",
-      dataPoints: reversedData
+      dataPoints: reversedData,
+      indexLabelFontColor: "yellow"
     }]
   }
   //calculate percentage
@@ -143,18 +147,21 @@ const App = () => {
       />
       {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
-      <StyledForm>
-        <StyledInput type="text" placeholder="Name of card holder"></StyledInput>
-        <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
-        <StyledInput type="text" label="hej" placeholder="Expiration date"></StyledInput>
-        <StyledInput type="text" placeholder="CVV"></StyledInput>
+      {showPayment && <>
+        <StyledForm>
+          <StyledInput type="text" placeholder="Name of card holder"></StyledInput>
+          <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
+          <StyledInput type="text" label="hej" placeholder="Expiration date"></StyledInput>
+          <StyledInput type="text" placeholder="CVV"></StyledInput>
 
-        <StyledButton onClick={handlePayment}>
-          Pay now
-        </StyledButton>
-      </StyledForm>
+          <StyledButton onClick={handlePayment}>
+            Pay now
+          </StyledButton>
+        </StyledForm>
+      </>}
 
       {isPaid && <Confetti
+      style={{ zIndex: 999999 }}
         width={width}
         height={height}
       />}
