@@ -1,10 +1,31 @@
 /* App.js */
+import styled from "styled-components";
 import React, { Component } from 'react';
 import CanvasJSReact from './canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
+
+const StyledHeader = styled.h1`
+  font-size: 100px; 
+  margin-top: 50px; 
+  color: black; 
+  text-align: center; 
+  display: block;
+`;
+
+const StyledLink = styled.a`
+  font-size: 52px; 
+  margin-top: 50px; 
+  color: black; 
+  text-align: center; 
+  display: block;
+`;
+
+
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 class App extends Component {
 	render() {
+    let didPayment = true;
 		var dataPoint;
 		var total;
     const numberOfLayers = 20;
@@ -66,9 +87,16 @@ class App extends Component {
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
-      <a style={{fontSize: "52px", margin: "50px auto", color: "black"}} href="./RICH.pdf" download>Download the pdf baby</a>
+      {didPayment && (
+        <>
+          <StyledHeader>Now you are a official gold digger!</StyledHeader>
+          <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
+        </>
+      )}
+      
 		</div>
 		);
 	}
 }
 export default App;
+
