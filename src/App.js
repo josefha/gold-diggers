@@ -1,7 +1,8 @@
 /* App.js */
 import styled from "styled-components";
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import CanvasJSReact from './canvasjs.react';
+import Confetti from 'react-confetti'
 var CanvasJS = CanvasJSReact.CanvasJS;
 
 const StyledHeader = styled.h1`
@@ -32,57 +33,65 @@ const StyledInput = styled.input`
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: new Date()};
-    this.didPayment = false
+const App = () => {
+  const [showConfetti, setShowConfetti] = useState(true)
+
+  let didPayment = true;
+  var dataPoint;
+  var total;
+  const numberOfLayers = 20;
+  const dataPoints = [];
+  const startY = 2850;
+  const startMoney = 1;
+  const currentSales = ["Robin", "Hugo", "Shani", "Victor", "David"];
+  let Y = startY;
+  let oldPrice = startMoney;
+  for (var i = 0; i < numberOfLayers; i++) {
+    const yForThis = Y * 1;
+    const label = i < currentSales.length ? currentSales[i] : "Open for sale"
+    const price = oldPrice * 2;
+    dataPoints.push({ label, y: yForThis, price });
+    oldPrice = price;
+    Y = yForThis;
   }
-
-   handlePayment = () => {
-    this.setState({
-      didPayment: true
-    })
+  const reversedData = dataPoints.reverse();
+  const colors = [];
+  const gold = "#D4AF37";
+  const gray = "#C8C6C4";
+  for (var i = 0; i < dataPoints.length; i++) {
+    if (i < currentSales.length) {
+      colors.push(gold);
+    } else {
+      colors.push(gray);
+    }
   }
-
-
-	render() {
-		var dataPoint;
-		var total;
-    const numberOfLayers = 20;
-    const dataPoints = [];
-    const startY = 2850;
-    const startMoney = 1;
-    const currentSales = ["Robin","Hugo","Shani","Victor","David"];
-    const SOLD = "SOLD";
-    const BUY_NOW = "BUY NOW";
-    let Y = startY;
-    let oldPrice = startMoney;
-
-    const onClick = function(e){
-      console.log("e.datapoint",e.dataPoint);
+  const reversedColors = colors.reverse();
+  CanvasJS.addColorSet("goldAndGray", reversedColors);
+  const options = {
+    colorSet: "goldAndGray",
+    height: 1000,
+    animationEnabled: true,
+    title: {
+      text: "Gold digger - buy gold and be a digger"
+    },
+    data: [{
+      type: "pyramid",
+      legendText: "{label}",
+      indexLabel: "{label} - {price}$",
+      toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+      dataPoints: reversedData
+    }]
+  }
+  //calculate percentage
+  dataPoint = options.data[0].dataPoints;
+  total = dataPoint[0].y;
+  for (var i = 0; i < dataPoint.length; i++) {
+    if (i === 0) {
+      options.data[0].dataPoints[i].percentage = 100;
+    } else {
+      options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
     }
-
-    for(var i=0; i<numberOfLayers; i++){
-      const yForThis = Y*1;
-      const label = i<currentSales.length ? currentSales[i] : "Open for sale"
-      const price = oldPrice*2;
-      const tooltip = i<currentSales.length ? SOLD : BUY_NOW
-      dataPoints.push({label, y: yForThis, price, tooltip, click: onClick});
-      oldPrice=price;
-      Y = yForThis;
-    }
-    const reversedData = dataPoints.reverse();
-    const colors = [];
-    const gold= "#D4AF37";
-    const gray ="#C8C6C4";
-    for(var i=0; i<dataPoints.length; i++){
-      if(i < currentSales.length){
-        colors.push(gold);
-      }else{
-        colors.push(gray);
-      }
-    }
+<<<<<<< HEAD
     const reversedColors = colors.reverse();
     CanvasJS.addColorSet("goldAndGray",reversedColors);
 		const options = {
@@ -115,6 +124,18 @@ class App extends Component {
 			<CanvasJSChart options = {options}
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+=======
+  }
+  return (
+    <div>
+      <CanvasJSChart options={options}
+      />
+      {showConfetti && <Confetti
+        width={800}
+        height={1000}
+      />}
+      {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+>>>>>>> 6ac91e4f (confetti in the toooown boys)
 
       <StyledForm>
         <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
@@ -132,10 +153,9 @@ class App extends Component {
           <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
         </>
       )}
-      
-		</div>
-		);
-	}
+
+    </div>
+  );
 }
 export default App;
 
