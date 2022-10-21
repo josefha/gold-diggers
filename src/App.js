@@ -7,6 +7,15 @@ class App extends Component {
 	render() {
 		var dataPoint;
 		var total;
+    const numberOfLayers = 50;
+    const dataPoints = [];
+    const startY = 2850;
+    let Y = startY;
+    for(var i=0; i<numberOfLayers; i++){
+      const yForThis = Y*0.8;
+      dataPoints.push({label: "whatever", y: yForThis});
+      Y = yForThis;
+    }
 		const options = {
 			animationEnabled: true,
 			title: {
@@ -23,13 +32,7 @@ class App extends Component {
 				legendText: "{label}",
 				indexLabel: "{label} - {y}",
 				toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
-				dataPoints: [
-					{ label: "Impressions", y: 2850},
-					{ label: "Clicked", y: 2150},
-					{ label: "Free Downloads", y: 1900},
-					{ label: "Purchase", y: 650},
-					{ label: "Renewal", y: 250}
-				]
+				dataPoints
 			}]
 		}
 		//calculate percentage
