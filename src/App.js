@@ -51,6 +51,8 @@ class App extends Component {
 				 /*onRef={ref => this.chart = ref}*/
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+
+      <a style={{color: "white"}} href="./RICH.pdf" download>Download the pdf baby</a>
 		</div>
 		);
 	}
