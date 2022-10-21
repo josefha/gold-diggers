@@ -15,19 +15,26 @@ const StyledHeader = styled.h1`
 
 const StyledLink = styled.a`
   font-size: 52px; 
-  margin-top: 50px; 
+  margin-top: 50px auto; 
   color: black; 
   text-align: center; 
   display: block;
 `;
 
 const StyledForm = styled.form`
-  display: block;
-  margin-top: 50px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px auto;
 `;
 
 const StyledInput = styled.input`
-  display: block;
+  width: 20%;
+`;
+
+const StyledButton = styled.button`
+  margin-top: 20px;
+  width: 20%;
 `;
 
 
@@ -112,14 +119,15 @@ const App = () => {
         {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
         <StyledForm>
-          <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
-          <StyledInput type="text" placeholder="date"></StyledInput>
-          <StyledInput type="text" placeholder="cvv"></StyledInput>
+        <StyledInput type="text" placeholder="Name of card holder"></StyledInput>
+        <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
+        <StyledInput type="text" label="hej" placeholder="Expiration date"></StyledInput>
+        <StyledInput type="text" placeholder="CVV"></StyledInput>
 
-          <button onClick={handlePayment}>
-            PAY BITCH
-          </button>
-        </StyledForm>
+        <StyledButton onClick={() => this.handlePayment()}>
+          Pay now
+        </StyledButton>
+      </StyledForm>
 
         {isPaid && (
           <>
