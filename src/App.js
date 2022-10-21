@@ -54,7 +54,8 @@ const StyledButton = styled.button`
 `;
 
 const RootDiv = styled.div`
-  background-image: url("./money.jpeg");
+  background:linear-gradient(0deg, rgba(255, 0, 150, 0.3), rgba(255, 0, 150, 0.3)), url("./money.jpeg");;
+  /* background-image: url("./money.jpeg"); */
   background-repeat: no-repeat;
   background-size: cover;
 `
