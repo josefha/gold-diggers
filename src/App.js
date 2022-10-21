@@ -5,6 +5,7 @@ import CanvasJSReact from './canvasjs.react';
 import Confetti from 'react-confetti'
 import { Modal } from "@mui/material";
 import { Box } from "@mui/system";
+import { useWindowSize } from "./hooks"
 var CanvasJS = CanvasJSReact.CanvasJS;
 
 const style = {
@@ -73,38 +74,38 @@ const App = () => {
   const dataPoints = [];
   const startY = 2850;
   const startMoney = 1;
-  const currentSales = ["Robin","Hugo","Shani","Victor","David"];
+  const currentSales = ["Robin", "Hugo", "Shani", "Victor", "David"];
   const SOLD = "SOLD";
   const BUY_NOW = "BUY NOW";
   let Y = startY;
   let oldPrice = startMoney;
 
-  const onClick = function(e){
-    console.log("e.datapoint",e.dataPoint);
+  const onClick = function (e) {
+    console.log("e.datapoint", e.dataPoint);
   }
 
-  for(var i=0; i<numberOfLayers; i++){
-    const yForThis = Y*1;
-    const label = i<currentSales.length ? currentSales[i] : "Open for sale"
-    const price = oldPrice*2;
-    const tooltip = i<currentSales.length ? SOLD : BUY_NOW
-    dataPoints.push({label, y: yForThis, price, tooltip, click: onClick});
-    oldPrice=price;
+  for (var i = 0; i < numberOfLayers; i++) {
+    const yForThis = Y * 1;
+    const label = i < currentSales.length ? currentSales[i] : "Open for sale"
+    const price = oldPrice * 2;
+    const tooltip = i < currentSales.length ? SOLD : BUY_NOW
+    dataPoints.push({ label, y: yForThis, price, tooltip, click: onClick });
+    oldPrice = price;
     Y = yForThis;
   }
   const reversedData = dataPoints.reverse();
   const colors = [];
-  const gold= "#D4AF37";
-  const gray ="#C8C6C4";
-  for(var i=0; i<dataPoints.length; i++){
-    if(i < currentSales.length){
+  const gold = "#D4AF37";
+  const gray = "#C8C6C4";
+  for (var i = 0; i < dataPoints.length; i++) {
+    if (i < currentSales.length) {
       colors.push(gold);
-    }else{
+    } else {
       colors.push(gray);
     }
   }
   const reversedColors = colors.reverse();
-  CanvasJS.addColorSet("goldAndGray",reversedColors);
+  CanvasJS.addColorSet("goldAndGray", reversedColors);
   const options = {
     backgroundColor: "transparent",
     colorSet: "goldAndGray",
@@ -124,45 +125,51 @@ const App = () => {
   //calculate percentage
   dataPoint = options.data[0].dataPoints;
   total = dataPoint[0].y;
-  for(var i = 0; i < dataPoint.length; i++) {
-    if(i === 0) {
+  for (var i = 0; i < dataPoint.length; i++) {
+    if (i === 0) {
       options.data[0].dataPoints[i].percentage = 100;
     } else {
       options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
     }
   }
+  const { width, height } = useWindowSize()
 
 
- 
-    return (
-      <RootDiv>
-        <CanvasJSChart options={options}
-        />
-        {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
-        <StyledForm>
+
+  return (
+    <RootDiv>
+      <CanvasJSChart options={options}
+      />
+      {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+
+      <StyledForm>
         <StyledInput type="text" placeholder="Name of card holder"></StyledInput>
         <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
         <StyledInput type="text" label="hej" placeholder="Expiration date"></StyledInput>
         <StyledInput type="text" placeholder="CVV"></StyledInput>
 
-        <StyledButton onClick={() => this.handlePayment()}>
+        <StyledButton onClick={handlePayment}>
           Pay now
         </StyledButton>
       </StyledForm>
 
-        <Modal open={isPaid}>
-        <Box style={style}>
-        <StyledHeader>Now you are an official gold digger!</StyledHeader>
-            <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
-        </Box>
-           
-       
-        </Modal>
+      {isPaid && <Confetti
+        width={width}
+        height={height}
+      />}
+      <Modal open={isPaid}>
 
-      </RootDiv>
-    );
-  }
+        <Box style={style}>
+          <StyledHeader>Now you are an official gold digger!</StyledHeader>
+          <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
+        </Box>
+
+      </Modal>
+
+    </RootDiv>
+  );
+}
 
 export default App;
 
