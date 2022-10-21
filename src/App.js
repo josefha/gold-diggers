@@ -30,6 +30,12 @@ const StyledInput = styled.input`
   display: block;
 `;
 
+const RootDiv = styled.div`
+  background-image: url("./money.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+`
+
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -80,6 +86,7 @@ const App = () => {
   const reversedColors = colors.reverse();
   CanvasJS.addColorSet("goldAndGray",reversedColors);
   const options = {
+    backgroundColor: "transparent",
     colorSet: "goldAndGray",
     height: 1000,
     animationEnabled: true,
@@ -106,7 +113,7 @@ const App = () => {
   }
  
     return (
-      <div>
+      <RootDiv>
         <CanvasJSChart options={options}
         />
         {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
@@ -128,7 +135,7 @@ const App = () => {
           </>
         )}
 
-      </div>
+      </RootDiv>
     );
   }
 
