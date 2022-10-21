@@ -7,32 +7,30 @@ class App extends Component {
 	render() {
 		var dataPoint;
 		var total;
-    const numberOfLayers = 50;
+    const numberOfLayers = 20;
     const dataPoints = [];
     const startY = 2850;
+    const currentSales = ["Robin","Hugo","Shani","Victor","David"];
     let Y = startY;
     for(var i=0; i<numberOfLayers; i++){
-      const yForThis = Y*0.8;
-      dataPoints.push({label: "whatever", y: yForThis});
+      const yForThis = Y*1;
+      const label = i<currentSales.length ? currentSales[i] : "Open for sale"
+      dataPoints.push({label, y: yForThis});
       Y = yForThis;
     }
+    const reversedData = dataPoints.reverse();
 		const options = {
+      height: 1000,
 			animationEnabled: true,
 			title: {
-				text: "Sales via Advertisement"
-			},
-			legend: {
-				horizontalAlign: "right",
-				verticalAlign: "center",
-				reversed: true
+				text: "Gold digger - buy gold and be a digger"
 			},
 			data: [{
 				type: "pyramid",
-				showInLegend: true,
 				legendText: "{label}",
 				indexLabel: "{label} - {y}",
 				toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
-				dataPoints
+				dataPoints: reversedData
 			}]
 		}
 		//calculate percentage
@@ -48,7 +46,6 @@ class App extends Component {
 		return (
 		<div>
 			<CanvasJSChart options = {options}
-				 /*onRef={ref => this.chart = ref}*/
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 		</div>
