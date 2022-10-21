@@ -20,12 +20,33 @@ const StyledLink = styled.a`
   display: block;
 `;
 
+const StyledForm = styled.form`
+  display: block;
+  margin-top: 50px; 
+`;
+
+const StyledInput = styled.input`
+  display: block;
+`;
+
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+    this.didPayment = false
+  }
+
+   handlePayment = () => {
+    this.setState({
+      didPayment: true
+    })
+  }
+
+
 	render() {
-    let didPayment = true;
 		var dataPoint;
 		var total;
     const numberOfLayers = 20;
@@ -95,9 +116,19 @@ class App extends Component {
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
-      {didPayment && (
+      <StyledForm>
+        <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
+        <StyledInput type="text" placeholder="date"></StyledInput>
+        <StyledInput type="text" placeholder="cvv"></StyledInput>
+
+        <button onClick={() => this.handlePayment()}>
+          PAY BITCH
+        </button>
+      </StyledForm>
+
+      {this.state.didPayment && (
         <>
-          <StyledHeader>Now you are a official gold digger!</StyledHeader>
+          <StyledHeader>Now you are an official gold digger!</StyledHeader>
           <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
         </>
       )}
