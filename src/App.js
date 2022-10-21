@@ -3,7 +3,22 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import CanvasJSReact from './canvasjs.react';
 import Confetti from 'react-confetti'
+import { Modal } from "@mui/material";
+import { Box } from "@mui/system";
 var CanvasJS = CanvasJSReact.CanvasJS;
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  backgroundColor: "#fff"
+};
 
 const StyledHeader = styled.h1`
   font-size: 100px; 
@@ -21,11 +36,9 @@ const StyledLink = styled.a`
   display: block;
 `;
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px auto;
+const StyledForm = styled.div`
+  display: block;
+  margin-top: 50px; 
 `;
 
 const StyledInput = styled.input`
@@ -111,6 +124,8 @@ const App = () => {
       options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
     }
   }
+
+
  
     return (
       <div>
@@ -129,12 +144,14 @@ const App = () => {
         </StyledButton>
       </StyledForm>
 
-        {isPaid && (
-          <>
-            <StyledHeader>Now you are an official gold digger!</StyledHeader>
+        <Modal open={isPaid}>
+        <Box style={style}>
+        <StyledHeader>Now you are an official gold digger!</StyledHeader>
             <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
-          </>
-        )}
+        </Box>
+           
+       
+        </Modal>
 
       </div>
     );
