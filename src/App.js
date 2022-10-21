@@ -3,7 +3,22 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import CanvasJSReact from './canvasjs.react';
 import Confetti from 'react-confetti'
+import { Modal } from "@mui/material";
+import { Box } from "@mui/system";
 var CanvasJS = CanvasJSReact.CanvasJS;
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 700,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  backgroundColor: "#fff"
+};
 
 const StyledHeader = styled.h1`
   font-size: 100px; 
@@ -15,19 +30,24 @@ const StyledHeader = styled.h1`
 
 const StyledLink = styled.a`
   font-size: 52px; 
-  margin-top: 50px; 
+  margin-top: 50px auto; 
   color: black; 
   text-align: center; 
   display: block;
 `;
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
   display: block;
   margin-top: 50px; 
 `;
 
 const StyledInput = styled.input`
-  display: block;
+  width: 20%;
+`;
+
+const StyledButton = styled.button`
+  margin-top: 20px;
+  width: 20%;
 `;
 
 const RootDiv = styled.div`
@@ -111,6 +131,8 @@ const App = () => {
       options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
     }
   }
+
+
  
     return (
       <RootDiv>
@@ -119,21 +141,24 @@ const App = () => {
         {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
         <StyledForm>
-          <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
-          <StyledInput type="text" placeholder="date"></StyledInput>
-          <StyledInput type="text" placeholder="cvv"></StyledInput>
+        <StyledInput type="text" placeholder="Name of card holder"></StyledInput>
+        <StyledInput type="text" placeholder="Mastercard number"></StyledInput>
+        <StyledInput type="text" label="hej" placeholder="Expiration date"></StyledInput>
+        <StyledInput type="text" placeholder="CVV"></StyledInput>
 
-          <button onClick={handlePayment}>
-            PAY BITCH
-          </button>
-        </StyledForm>
+        <StyledButton onClick={() => this.handlePayment()}>
+          Pay now
+        </StyledButton>
+      </StyledForm>
 
-        {isPaid && (
-          <>
-            <StyledHeader>Now you are an official gold digger!</StyledHeader>
+        <Modal open={isPaid}>
+        <Box style={style}>
+        <StyledHeader>Now you are an official gold digger!</StyledHeader>
             <StyledLink href="./rich.pdf" download>Download your golddigger certificate here</StyledLink>
-          </>
-        )}
+        </Box>
+           
+       
+        </Modal>
 
       </RootDiv>
     );
