@@ -1,8 +1,19 @@
 /* App.js */
 import React, { Component } from 'react';
 import CanvasJSReact from './canvasjs.react';
-// var CanvasJS = CanvasJSReact.CanvasJS;
+import styled from "styled-components";
+
+const StyledLink = styled.a`
+  font-size: 52px; 
+  margin-top: 50px; 
+  color: black; 
+  text-align: center; 
+  display: block;
+`;
+
+
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 class App extends Component {
 	render() {
 		var dataPoint;
@@ -49,9 +60,10 @@ class App extends Component {
 			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 
-      <a style={{fontSize: "52px", margin: "50px auto", color: "black"}} href="./RICH.pdf" download>Download the pdf baby</a>
+      <StyledLink href="./rich.pdf" download>Download the pdf baby</StyledLink>
 		</div>
 		);
 	}
 }
 export default App;
+
